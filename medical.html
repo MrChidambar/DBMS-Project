@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Management System</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background-image: url('image.jpg');
+            background-size: cover;
+            background-position: center;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+        }
+
+        h2 {
+            color: #555;
+            margin-top: 30px;
+        }
+
+        form {
+            margin-bottom: 30px;
+        }
+
+        label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        input[type="text"],
+        input[type="number"],
+        input[type="email"],
+        select,
+        input[type="date"] {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+
+        input[type="submit"] {
+            padding: 10px 20px;
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .transparent-box {
+            padding: 20px;
+            border-radius: 8px;
+            background-color: rgba(255, 255, 255, 0.8); /* Completely transparent white background */
+            margin-bottom: 20px;
+        }
+
+        div.stock-item {
+            margin-bottom: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+            border-bottom: 1px solid #ddd;
+        }
+
+        th {
+            background-color: #007bff;
+            color: #fff;
+        }
+
+        tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+<body>
+    <h1>Stock Management System</h1>
+    
+    <!-- Form to add new stock -->
+    <div class="transparent-box">
+        <h2>Add New Stock:</h2>
+        <form action="add_stock.php" method="POST">
+            <label for="stock_name">Product Name:</label><br>
+            <input type="text" id="stock_name" name="name" required><br>
+            <label for="stock_quantity">Quantity:</label><br>
+            <input type="number" id="stock_quantity" name="quantity" required><br>
+            <label for="stock_price">Price:</label><br>
+            <input type="number" id="stock_price" name="price" step="0.01" required><br>
+            <input type="submit" value="Add Stock">
+        </form>
+    </div>
+
+    <!-- Form to add new supplier -->
+    <div class="transparent-box">
+        <h2>Add New Supplier:</h2>
+        <form action="add_supplier.php" method="POST">
+            <label for="supplier_name">Supplier Name:</label><br>
+            <input type="text" id="supplier_name" name="name" required><br>
+            <label for="contact_person">Contact Person:</label><br>
+            <input type="text" id="contact_person" name="contact_person"><br>
+            <label for="supplier_email">Email:</label><br>
+            <input type="email" id="supplier_email" name="email"><br>
+            <label for="supplier_phone">Phone:</label><br>
+            <input type="text" id="supplier_phone" name="phone"><br>
+            <input type="submit" value="Add Supplier">
+        </form>
+    </div>
+
+    <!-- Form to add new sale -->
+    <div class="transparent-box">
+        <h2>Add New Sale:</h2>
+        <form action="add_sale.php" method="POST">
+            <label for="select_stock">Select Stock:</label><br>
+            <select id="select_stock" name="stock_id" required>
+                <?php include 'label_stocks.php'; ?>
+            </select><br>
+            <label for="sale_quantity">Quantity:</label><br>
+            <input type="number" id="sale_quantity" name="quantity" required><br>
+            <label for="sale_amount">Amount:</label><br>
+            <input type="number" id="sale_amount" name="amount" step="0.01" required><br>
+            <label for="sale_date">Sale Date:</label><br>
+            <input type="date" id="sale_date" name="sale_date" required><br>
+            <input type="submit" value="Add Sale">
+        </form>
+    </div>
+    <div class="transparent-box">
+    <!-- Display all stocks -->
+    <h2>All Stocks:</h2>
+    <div id="stocks">
+        <!-- Stocks will be dynamically loaded here using PHP -->
+    </div>
+</div>
+<!-- Display all sales -->
+<div class="transparent-box">
+<h2>All Sales:</h2>
+<div id="sales">
+    <!-- Sales will be dynamically loaded here using PHP -->
+    <!-- <?php include 'display_sales.php'; ?> -->
+</div>
+</div>
+
+<!-- Display all suppliers -->
+<div class="transparent-box">
+<h2>All Suppliers:</h2>
+<div id="suppliers">
+    <!-- Suppliers will be dynamically loaded here using PHP -->
+    <!-- <?php include 'display_suppliers.php'; ?> -->
+</div>
+</div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        // Function to fetch and display stocks using AJAX
+        function displayStocks() {
+            $.get("display_stocks.php", function(data) {
+                $("#stocks").html(data);
+            });
+        }
+
+        // Call the function on page load
+        $(document).ready(function() {
+            displayStocks();
+        });
+    </script>
+
+
+<script>
+    // Function to fetch and display stocks using AJAX
+    function displaySales() {
+        $.get("display_sales.php", function(data) {
+            $("#sales").html(data);
+        });
+    }
+
+    // Call the function on page load
+    $(document).ready(function() {
+        displaySales();
+    });
+</script>
+
+<script>
+    // Function to fetch and display stocks using AJAX
+    function displaySuppliers() {
+        $.get("display_suppliers.php", function(data) {
+            $("#suppliers").html(data);
+        });
+    }
+
+    // Call the function on page load
+    $(document).ready(function() {
+        displaySuppliers();
+    });
+</script>
+
+</body>
+</html>
